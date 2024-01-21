@@ -50,8 +50,8 @@ const SignUp = () => {
     //Trong trường hợp này sử dụng preventDefault để ngăn việc trình duyệt sẽ reload page khi nhấn vào button submit 
     e.preventDefault();
     
-    try{
-      setLoading(true)
+    try {
+      setLoading(true);
       const res = await fetch('/api/auth/sign-up', {
         method: 'POST',
         headers: {
@@ -60,7 +60,8 @@ const SignUp = () => {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      if(data.sucess===false){
+      console.log(data);
+      if (data.success === false) {
         setLoading(false);
         setError(data.message);
         return;
@@ -68,7 +69,7 @@ const SignUp = () => {
       setLoading(false);
       setError(null);
       navigate('/sign-in');
-    }catch(error){
+    } catch (error) {
       setLoading(false);
       setError(error.message);
     }
