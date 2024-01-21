@@ -18,8 +18,6 @@ const App = () => {
         <Route path="/about" element={<About/>}/>
         <Route path="/profile" element={<Profile/>}/>
 
-       
-
       </Routes>
     </BrowserRouter>
   )
