@@ -65,7 +65,8 @@ export const signin = async(req,res,next) =>{
         const token = jwt.sign({id:validUser._id,}, process.env.JWT_SECRET)
 
         // password: pass - Destruturing : lấyy giá trị password gán vào biến pass
-        // ...rest : lấy tất cả các thuộc tính còn lại và gán vào biến rest
+        // ...rest : lấy tất cả các thuộc tính còn lại và gán vào biến rest (có thể đặt tên biến khác, ko nhất thiết phải là res)
+        // tham số còn lại aka rest parameters 
         const {password:pass,...rest} = validUser._doc;
 
         //Save the token as the cookie
