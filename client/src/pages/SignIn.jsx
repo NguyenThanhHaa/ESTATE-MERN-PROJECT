@@ -35,7 +35,8 @@ const SignIn = () => {
         ...formData,//Copy các properties của formData bằng cách sử dụng operator spread ... vào 1 formData mới 
         [e.target.id]: e.target.value
         // e.target.id: trường nhập liệu được truyền qua từ onChange 
-        // e.target.value: giá trị người dùng đã nhập  
+        // e.target.value: giá trị người dùng đã nhập
+        // id nào thì value đó  
       }
     )
   }
