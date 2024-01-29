@@ -2,21 +2,26 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { IoEyeSharp } from "react-icons/io5";
 import { IoEyeOffSharp } from "react-icons/io5";
+import { useDispatch, useSelector } from 'react-redux';
+import {signInStart,signInFailure,signInSuccess} from '../redux/user/userSlice'
 
 const SignIn = () => {
   const [password, setPassword] = useState('');
+  
   const [formData,setFormData] = useState({});
 
   const [isShowPassword, setIsShowPassword] = useState(false);
 
   const [isConfirmPassword, setIsConfirmPassword] = useState(false);
 
-  const [error,setError] = useState(null);
+  // const [error,setError] = useState(null);
 
-  const [loading, setLoading] = useState(false); 
+  // const [loading, setLoading] = useState(false); 
+  const {loading,error} = useSelector((state) => state.user);
 
   const navigate = useNavigate();
 
+  const dispatch = useDispatch();
 
 
   const handleTogglePassword = () => {
@@ -52,7 +57,8 @@ const SignIn = () => {
     e.preventDefault();
     
     try {
-      setLoading(true);
+      // setLoading(true);
+      dispatch(signInStart());
       const res = await fetch('/api/auth/sign-in', {
         method: 'POST',
         headers: {
@@ -63,16 +69,19 @@ const SignIn = () => {
       const data = await res.json();
       console.log(data);
       if (data.success === false) {
-        setLoading(false);
-        setError(data.message);
+        // setLoading(false);
+        // setError(data.message);
+        dispatch(signInFailure(data.message));
         return;
       }
-      setLoading(false);
-      setError(null);
+      // setLoading(false);
+      // setError(null);
+      dispatch(signInSuccess(data));
       navigate('/');
     } catch (error) {
-      setLoading(false);
-      setError(error.message);
+      // setLoading(false);
+      // setError(error.message);
+      dispatch(signInFailure(error.message));
     }
 }
   
