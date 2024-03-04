@@ -4,6 +4,7 @@ import { IoEyeSharp } from "react-icons/io5";
 import { IoEyeOffSharp } from "react-icons/io5";
 import { useDispatch, useSelector } from 'react-redux';
 import {signInStart,signInFailure,signInSuccess} from '../redux/user/userSlice'
+import OAuth from '../components/OAuth';
 
 const SignIn = () => {
   const [password, setPassword] = useState('');
@@ -120,7 +121,9 @@ const SignIn = () => {
         
         <button
           disabled={loading} 
-          className="bg-slate-700 text-white rounded-lg py-2 uppercase hover:bg-slate-500 disabled:opacity-80">{loading ? 'Đợi xíu nha...' : 'Đăng Nhập'}</button>
+          className="bg-slate-700 text-white rounded-lg py-2 uppercase hover:bg-slate-500 disabled:opacity-80">{loading ? 'Đợi xíu nha...' : 'Đăng Nhập'}
+        </button>
+        <OAuth/>
       </form>
 
       <div className="flex gap-2 my-4">

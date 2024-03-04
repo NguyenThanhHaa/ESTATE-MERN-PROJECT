@@ -60,16 +60,50 @@ export const signin = async(req,res,next) =>{
 
         const token = jwt.sign({id:validUser._id,}, process.env.JWT_SECRET)
 
-        // password: pass - Destruturing : lấyy giá trị password gán vào biến pass
+        // password: pass - Destructuring : lấyy giá trị password gán vào biến pass
         // ...rest : lấy tất cả các thuộc tính còn lại và gán vào biến rest (có thể đặt tên biến khác, ko nhất thiết phải là res)
         // tham số còn lại aka rest parameters 
         const {password:pass,...rest} = validUser._doc;
 
         //Save the token as the cookie
-        //httpOnly:true có nghĩa là other thỉd party applications can't have access to our cookie
+        //httpOnly:true có nghĩa là other third party applications can't have access to our cookie
         res.cookie('access_token',token,{httpOnly:true}).status(200).json(rest); // chỉ trả về rest - các thuộc tính còn lại, mà không trả password của user về => bảo mật tốt hơn. 
     }catch(error){
         next(error);
+    }
+}
+
+export const google = async (req,res,next) => {
+    try{
+        const user = await User.findOne({email:req.body.email});
+        //Nếu user có tồn tại 
+        if(user){
+            const token = jwt.sign({id:user._id}, process.env.JWT_SECRET);
+            const {password: pass,...rest} = user._doc;
+
+            res 
+                .cookie('access_token',token,{httpOnly:true})
+                .status(200)
+                .json(rest);
+        }else{
+            //Generate password của user vì user sign in = google nên k cần fetch password của user. Và vì yêu cầu có password là bắt buộc để save xuống db.
+            // => Chỉ cần tạo 1 random password. Nếu user k thích thì có thể update password sau. 
+            const generatedPassword = Math.random().toString(36).slice(-8);
+
+            const hashedPassword = bcryptjs.hashSync(generatedPassword,10);
+            const newUser = new User({username:req.body.name, email:req.body.email, password:hashedPassword, avatar:req.body.photoURL});
+
+            await newUser.save();
+            
+            const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
+            const { password: pass, ...rest } = newUser._doc;
+            res
+              .cookie('access_token', token, { httpOnly: true })
+              .status(200)
+              .json(rest);
+        }
+    }catch(error){
+        next(error)
     }
 }
    

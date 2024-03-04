@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { IoEyeSharp } from "react-icons/io5";
 import { IoEyeOffSharp } from "react-icons/io5";
+import OAuth from '../components/OAuth';
 
 const SignUp = () => {
   const [password, setPassword] = useState('');
@@ -135,7 +136,10 @@ const SignUp = () => {
         
         <button
           disabled={loading} 
-          className="bg-slate-700 text-white rounded-lg py-2 uppercase hover:bg-slate-500 disabled:opacity-80">{loading ? 'Đợi xíu nha...' : 'Đăng Kí'}</button>
+          className="bg-slate-700 text-white rounded-lg py-2 uppercase hover:bg-slate-500 disabled:opacity-80">{loading ? 'Đợi xíu nha...' : 'Đăng Kí'}  
+        </button>
+
+        <OAuth/>
       </form>
 
       <div className="flex gap-2 my-4">
