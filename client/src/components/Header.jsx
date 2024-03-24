@@ -49,7 +49,7 @@ const Header = () => {
             duration={500}
             className="group relative inline-block cursor-pointer hover:text-brightColor">
                 {currentUser ? (
-                    <img src={currentUser.avatar} alt="user's avatar" className='rounded-full h-7 object-cover'/>
+                    <img src={currentUser.avatar} alt="user's avatar" className='rounded-full h-7 object-cover hover:border-2'/>
                 ) 
                 : 
                 <li className=" text-slate-700 hover:text-white">

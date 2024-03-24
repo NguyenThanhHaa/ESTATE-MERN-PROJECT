@@ -1,12 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState,useRef, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { IoEyeSharp } from "react-icons/io5";
 import { IoEyeOffSharp } from "react-icons/io5";
 import { LuImagePlus } from "react-icons/lu";
 import Tooltip from '@mui/material/Tooltip';
+import {getStorage, uploadBytesResumable, ref, getDownloadURL} from 'https://www.gstatic.com/firebasejs/10.8.1/firebase-storage.js'
+import { app } from '../firebase';
 
 const Profile = () => {
   const {currentUser} = useSelector((state)=>state.user)
+
+  // useRef: reference a value that’s not needed for rendering.
+  const fileRef = useRef(null)
+
+  const [file,setFile] = useState(undefined);
+
+  console.log(file)
 
   const [formData,setFormData] = useState({});
 
@@ -16,6 +25,38 @@ const Profile = () => {
     setIsShowPassword(!isShowPassword);
   };
 
+  const [filePerc,setFilePerc] = useState(0);
+  const [fileUploadError, setFileUploadError] = useState(false);
+
+  useEffect(()=>{
+    if(file){
+      handleFileUpload(file);
+    }
+  },[file]);
+
+  const handleFileUpload = (file) => {
+    const storage = getStorage(app);
+    const fileName = new Date().getTime() + file.name;
+    const storageRef = ref(storage, fileName);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      'state_changed',
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setFilePerc(Math.round(progress));
+      },
+      (error) => {
+        setFileUploadError(true);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) =>
+          setFormData({ ...formData, avatar: downloadURL })
+        );
+      }
+    );
+  };
 
   //Handle các giá trị do người dùng nhập vào các trường dữ liệu 
   const handleOnChange= (e) => {
@@ -30,28 +71,52 @@ const Profile = () => {
       }
     )
   }
-  console.log(formData)
+  // console.log(formData)
+  // console.log(filePerc)
+  // console.log(fileUploadError)
 
   return (
     <div className='p-5 max-w-lg mx-auto'>
       <h1 className='text-3xl text-center font-semibold mb-7'>Profile</h1>
 
       <form className="mx-auto flex flex-col gap-6 ">
-      <Tooltip title="Tải ảnh mới" placement="right-end">
-      <div className="flex relative mx-auto ">
-        <img src={currentUser.avatar} alt="user's avatar" className=" rounded-full cursor-pointer hover:opacity-85 object-cover"/>
-        <LuImagePlus className="absolute bottom-0 right-0 h-6 w-6  rounded-md cursor-pointer tool" style={{
-          backgroundColor:'rgb(241 245 249)'
-        }} />
-      </div>
-      </Tooltip>
-        <input
-          id="username"
-          type="text"
-          placeholder='Tên tài khoản'
-          className="p-3 rounded-md"
-          onChange={handleOnChange}
-        />
+        {/* Sử dụng prop hidden để ẩn 
+        Sử dụng prop accept để chỉ nhận file mong muốn */}
+        <input onChange={(e)=>setFile(e.target.files[0])} type='file' ref={fileRef} hidden accept="image/*"/>  
+        <Tooltip title="Tải ảnh mới" placement="right-end">
+        <div className="flex relative mx-auto ">
+          <img 
+            src={formData.avatar || currentUser.avatar}
+            alt="user's avatar" 
+            className=" rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2"/>
+          <LuImagePlus
+            onClick={()=>fileRef.current.click()} 
+            className="absolute bottom-0 right-0 h-6 w-6  rounded-md cursor-pointer tool" 
+            style={{
+            backgroundColor:'rgb(241 245 249)'
+            }} />
+        </div>
+        </Tooltip>
+        <p className='text-sm self-center'>
+          {fileUploadError ? (
+            <span className='text-red-700'>
+              Lỗi tải hình ảnh 
+            </span>
+          ) : filePerc > 0 && filePerc < 100 ? (
+            <span className='text-slate-700'>{`Đang tải ${filePerc}%`}</span>
+          ) : filePerc === 100 ? (
+            <span className='text-green-700'>Tải hình ảnh thành công!</span>
+          ) : (
+            ''
+          )}
+        </p>
+          <input
+            id="username"
+            type="text"
+            placeholder='Tên tài khoản'
+            className="p-3 rounded-md"
+            onChange={handleOnChange}
+          />
 
         <input
           id="email"
@@ -61,7 +126,7 @@ const Profile = () => {
           onChange={handleOnChange}
         />
 
-      <div className='flex relative  items-center'>
+        <div className='flex relative  items-center'>
           <input  
             id='password'
             type={isShowPassword ? 'text' : 'password'}
@@ -83,7 +148,7 @@ const Profile = () => {
 
         <button className="bg-slate-700 p-4 text-white rounded-md uppercase hover:bg-slate-500 font-semibold">Cập nhật</button>
 
-      <div className="flex justify-between">
+        <div className="flex justify-between">
         <div className="text-red-600 hover:cursor-pointer font-semibold hover:text-red-800">Xóa tài khoản?</div>
         <div className="text-red-600 hover:cursor-pointer font-semibold hover:text-red-800">Đăng xuất</div>
 
