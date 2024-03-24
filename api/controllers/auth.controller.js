@@ -23,7 +23,7 @@ export const signup = async (req,res,next)=>{
         /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/);
 
     if(!validPassword){
-        return next(errorHandler(404,'Mật khẩu cần tối thiểu 8 ký tự, ít nhất một chữ cái, một số và một ký tự đặc biệt'));
+        return next(errorHandler(404,'Mật khẩu cần tối thiểu 8 ký tự, ít nhất 1 chữ cái, 1 số và 1 ký tự đặc biệt'));
     }
 
     const hashedPassword = bcryptjs.hashSync(password,10);
