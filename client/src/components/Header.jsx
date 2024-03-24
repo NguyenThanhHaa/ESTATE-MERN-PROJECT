@@ -8,7 +8,7 @@ const Header = () => {
 
   return (
     <header className="bg-gradient-to-r from-slate-200 via-slate-300 to-slate-400 shadow-md">
-        <div className='flex justify-around items-center max-w-6xl mx-auto p-3'>
+        <div className='flex justify-around items-center max-w-6xl mx-auto py-3 px-10'>
             <Link to="/">
                 <h1 className="font-bold text-sm sm:text-xl flex flex-wrap">
                 <span className="text-slate-500">Hee</span>
@@ -17,7 +17,7 @@ const Header = () => {
             </Link>
 
         <form className="bg-slate-100 p-3 rounded-lg flex items-center">
-            <input type="text" placeholder='Search...' className="bg-transparent focus:outline-none w-24 sm:w-64"/>
+            <input type="text" placeholder='Tìm kiếm...' className="bg-transparent focus:outline-none w-24 sm:w-64"/>
             <FaSearch className='text-slate-500'/>
         </form>
 
@@ -44,17 +44,23 @@ const Header = () => {
                     </li>
             </Link>
 
-           
-           <Link 
-                to="/sign-in"
-                duration={500}
-                className="group relative inline-block cursor-pointer hover:text-brightColor">
+            <Link 
+            to="/profile"
+            duration={500}
+            className="group relative inline-block cursor-pointer hover:text-brightColor">
+                {currentUser ? (
+                    <img src={currentUser.avatar} alt="user's avatar" className='rounded-full h-7 object-cover'/>
+                ) 
+                : 
                 <li className=" text-slate-700 hover:text-white">
-                {''}
                 Đăng nhập
                 <span className="absolute inset-x-0 bottom-0 h-0.5 bg-white transform scale-x-0 origin-left transition-transform group-hover:scale-x-100"></span>
-                </li>
-           </Link>
+                </li> 
+            
+        }
+        </Link>
+           
+                
             
         </ul>
         </div>
