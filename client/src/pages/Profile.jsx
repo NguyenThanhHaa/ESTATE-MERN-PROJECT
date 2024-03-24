@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { IoEyeSharp } from "react-icons/io5";
 import { IoEyeOffSharp } from "react-icons/io5";
+import { LuImagePlus } from "react-icons/lu";
+import Tooltip from '@mui/material/Tooltip';
 
 const Profile = () => {
   const {currentUser} = useSelector((state)=>state.user)
@@ -33,10 +35,17 @@ const Profile = () => {
   return (
     <div className='p-5 max-w-lg mx-auto'>
       <h1 className='text-3xl text-center font-semibold mb-7'>Profile</h1>
-     
 
       <form className="mx-auto flex flex-col gap-6 ">
-      <img src={currentUser.avatar} alt="user's avatar" className="mx-auto rounded-full cursor-pointer hover:opacity-85"/>
+      <Tooltip title="Tải ảnh" placement="right-end">
+      <div className="flex relative mx-auto ">
+        <img src={currentUser.avatar} alt="user's avatar" className=" rounded-full cursor-pointer hover:opacity-85 object-cover"/>
+        <LuImagePlus className="absolute bottom-0 right-0 h-6 w-6  rounded-md cursor-pointer tool" style={{
+          zIndex:'1',
+          backgroundColor:'rgb(241 245 249)'
+        }} />
+      </div>
+      </Tooltip>
         <input
           id="username"
           type="text"
