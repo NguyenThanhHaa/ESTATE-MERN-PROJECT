@@ -32,11 +32,11 @@ const Profile = () => {
 
   return (
     <div className='p-5 max-w-lg mx-auto'>
-      <h1 className='text-3xl text-center font-semibold'>Trang cá nhân</h1>
+      <h1 className='text-3xl text-center font-semibold mb-7'>Profile</h1>
      
 
       <form className="mx-auto flex flex-col gap-6 ">
-      <img src={currentUser.avatar} alt="user's avatar" className="mx-auto p-7 rounded-full cursor-pointer hover:opacity-85"/>
+      <img src={currentUser.avatar} alt="user's avatar" className="mx-auto rounded-full cursor-pointer hover:opacity-85"/>
         <input
           id="username"
           type="text"
@@ -73,11 +73,11 @@ const Profile = () => {
           </button>
         </div>
 
-        <button className="bg-slate-700 p-4 text-white rounded-md uppercase hover:bg-slate-500">Cập nhật</button>
+        <button className="bg-slate-700 p-4 text-white rounded-md uppercase hover:bg-slate-500 font-semibold">Cập nhật</button>
 
       <div className="flex justify-between">
-        <div className="text-red-600 hover:cursor-pointer ">Xóa tài khoản?</div>
-        <div className="text-red-600 hover:cursor-pointer">Đăng xuất</div>
+        <div className="text-red-600 hover:cursor-pointer font-semibold hover:text-red-800">Xóa tài khoản?</div>
+        <div className="text-red-600 hover:cursor-pointer font-semibold hover:text-red-800">Đăng xuất</div>
 
       </div>
       </form>
