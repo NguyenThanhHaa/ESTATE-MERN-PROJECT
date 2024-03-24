@@ -37,11 +37,10 @@ const Profile = () => {
       <h1 className='text-3xl text-center font-semibold mb-7'>Profile</h1>
 
       <form className="mx-auto flex flex-col gap-6 ">
-      <Tooltip title="Tải ảnh" placement="right-end">
+      <Tooltip title="Tải ảnh mới" placement="right-end">
       <div className="flex relative mx-auto ">
         <img src={currentUser.avatar} alt="user's avatar" className=" rounded-full cursor-pointer hover:opacity-85 object-cover"/>
         <LuImagePlus className="absolute bottom-0 right-0 h-6 w-6  rounded-md cursor-pointer tool" style={{
-          zIndex:'1',
           backgroundColor:'rgb(241 245 249)'
         }} />
       </div>
