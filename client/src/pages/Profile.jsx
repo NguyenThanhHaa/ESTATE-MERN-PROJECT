@@ -6,9 +6,13 @@ import { LuImagePlus } from "react-icons/lu";
 import Tooltip from '@mui/material/Tooltip';
 import {getStorage, uploadBytesResumable, ref, getDownloadURL} from 'https://www.gstatic.com/firebasejs/10.8.1/firebase-storage.js'
 import { app } from '../firebase';
+import {updateUserStart, updateUserFailure, updateUserSuccess} from '../redux/user/userSlice'
+import {useDispatch} from 'react-redux'
 
 const Profile = () => {
-  const {currentUser} = useSelector((state)=>state.user)
+  const {currentUser,loading,error} = useSelector((state)=>state.user)
+
+  const dispatch = useDispatch()
 
   // useRef: reference a value that’s not needed for rendering.
   const fileRef = useRef(null)
@@ -20,6 +24,10 @@ const Profile = () => {
   const [formData,setFormData] = useState({});
 
   const [isShowPassword, setIsShowPassword] = useState(false);
+
+  const [updateSuccess, setUpdateSuccess] = useState(false);
+
+
 
   const handleTogglePassword = () => {
     setIsShowPassword(!isShowPassword);
@@ -75,11 +83,48 @@ const Profile = () => {
   // console.log(filePerc)
   // console.log(fileUploadError)
 
+  //Gọi api đki 
+  const handleSubmit = async (e) =>{
+    //e.preventDefault() là một phương thức trong JavaScript được sử dụng để ngăn chặn hành vi mặc định của một sự kiện. 
+    //Khi một sự kiện xảy ra (ví dụ: người dùng click chuột, gửi biểu mẫu, hoặc nhấn phím), trình duyệt thực hiện một số hành động mặc định. 
+    //preventDefault() được sử dụng để ngăn chặn các hành động mặc định đó.
+    //Trong trường hợp này sử dụng preventDefault để ngăn việc trình duyệt sẽ reload page khi nhấn vào button submit 
+    e.preventDefault();
+    
+    try {
+      // setLoading(true);
+      dispatch(updateUserStart());
+      const res = await fetch(`/api/user/update/${currentUser._id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      console.log(data);
+      if (data.success === false) {
+        // setLoading(false);
+        // setError(data.message);
+        dispatch(updateUserFailure(data.message));
+        return;
+      }
+      // setLoading(false);
+      // setError(null);
+      dispatch(updateUserSuccess(data));
+      setUpdateSuccess(true);
+    } catch (error) {
+      // setLoading(false);
+      // setError(error.message);
+      dispatch(updateUserFailure(error.message));
+    }
+}
+
   return (
     <div className='p-5 max-w-lg mx-auto'>
       <h1 className='text-3xl text-center font-semibold mb-7'>Profile</h1>
 
-      <form className="mx-auto flex flex-col gap-6 ">
+      <form onSubmit={handleSubmit} className="mx-auto flex flex-col gap-6 ">
         {/* Sử dụng prop hidden để ẩn 
         Sử dụng prop accept để chỉ nhận kiểu file mong muốn */}
         {/* Manipulating a DOM with a ref  */}
@@ -115,6 +160,7 @@ const Profile = () => {
           <input
             id="username"
             type="text"
+            defaultValue={currentUser.username}
             placeholder='Tên tài khoản'
             className="p-3 rounded-md"
             onChange={handleOnChange}
@@ -123,6 +169,7 @@ const Profile = () => {
         <input
           id="email"
           type="email"
+          defaultValue={currentUser.email}
           placeholder='Email'
           className="p-3 rounded-md"
           onChange={handleOnChange}
@@ -148,13 +195,17 @@ const Profile = () => {
           </button>
         </div>
 
-        <button className="bg-slate-700 p-4 text-white rounded-md uppercase hover:bg-slate-500 font-semibold">Cập nhật</button>
-
+        <button disabled={loading} className="bg-slate-700 p-4 text-white rounded-md uppercase hover:bg-slate-500 font-semibold">
+        {loading ? 'Đang tải...' : 'Cập nhật'}
+        </button>
+        
         <div className="flex justify-between">
         <div className="text-red-600 hover:cursor-pointer font-semibold hover:text-red-800">Xóa tài khoản?</div>
         <div className="text-red-600 hover:cursor-pointer font-semibold hover:text-red-800">Đăng xuất</div>
-
       </div>
+
+      {error && <p className='text-red-500 mt-5 font-semibold mx-auto uppercase'>{error}</p>}
+      <p className='text-green-700 mt-5 font-semibold mx-auto uppercase '>{updateSuccess ? 'Cập nhật thành công!' : ''}</p>
       </form>
 
       

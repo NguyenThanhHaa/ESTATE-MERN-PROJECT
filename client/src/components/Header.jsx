@@ -2,6 +2,7 @@ import React from 'react'
 import {FaSearch} from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import {useSelector } from 'react-redux'
+import { Tooltip } from '@mui/material'
 
 const Header = () => {
     const {currentUser} = useSelector(state=>state.user);
@@ -49,7 +50,10 @@ const Header = () => {
             duration={500}
             className="group relative inline-block cursor-pointer hover:text-brightColor">
                 {currentUser ? (
-                    <img src={currentUser.avatar} alt="user's avatar" className='rounded-full h-7 object-cover hover:border-2'/>
+                    <Tooltip title={currentUser.username} placement="bottom">
+                        <img src={currentUser.avatar} alt="user's avatar" className='rounded-full h-7 w-7 object-cover hover:border-2'/>
+                    </Tooltip>
+                    
                 ) 
                 : 
                 <li className=" text-slate-700 hover:text-white">
