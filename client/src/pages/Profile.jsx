@@ -81,7 +81,8 @@ const Profile = () => {
 
       <form className="mx-auto flex flex-col gap-6 ">
         {/* Sử dụng prop hidden để ẩn 
-        Sử dụng prop accept để chỉ nhận file mong muốn */}
+        Sử dụng prop accept để chỉ nhận kiểu file mong muốn */}
+        {/* Manipulating a DOM with a ref  */}
         <input onChange={(e)=>setFile(e.target.files[0])} type='file' ref={fileRef} hidden accept="image/*"/>  
         <Tooltip title="Tải ảnh mới" placement="right-end">
         <div className="flex relative mx-auto ">
@@ -90,6 +91,7 @@ const Profile = () => {
             alt="user's avatar" 
             className=" rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2"/>
           <LuImagePlus
+          // After React creates the DOM node and puts it on the screen, React will set the current property of your ref object to that DOM node. 
             onClick={()=>fileRef.current.click()} 
             className="absolute bottom-0 right-0 h-6 w-6  rounded-md cursor-pointer tool" 
             style={{
