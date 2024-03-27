@@ -122,7 +122,7 @@ const Profile = () => {
 
   return (
     <div className='p-5 max-w-lg mx-auto'>
-      <h1 className='text-3xl text-center font-semibold mb-7'>Profile</h1>
+      <h1 className='text-3xl text-center font-semibold mb-7'>Hồ sơ người dùng</h1>
 
       <form onSubmit={handleSubmit} className="mx-auto flex flex-col gap-6 ">
         {/* Sử dụng prop hidden để ẩn 
