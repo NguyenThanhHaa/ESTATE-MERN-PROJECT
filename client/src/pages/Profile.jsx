@@ -6,10 +6,28 @@ import { LuImagePlus } from "react-icons/lu";
 import Tooltip from '@mui/material/Tooltip';
 import {getStorage, uploadBytesResumable, ref, getDownloadURL} from 'https://www.gstatic.com/firebasejs/10.8.1/firebase-storage.js'
 import { app } from '../firebase';
-import {updateUserStart, updateUserFailure, updateUserSuccess} from '../redux/user/userSlice'
+import {updateUserStart, updateUserFailure, updateUserSuccess, deleteUserFailure, deleteUserStart, deleteUserSuccess} from '../redux/user/userSlice'
 import {useDispatch} from 'react-redux'
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import { IoIosClose } from "react-icons/io";
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 
 const Profile = () => {
+  
   const {currentUser,loading,error} = useSelector((state)=>state.user)
 
   const dispatch = useDispatch()
@@ -27,8 +45,9 @@ const Profile = () => {
 
   const [updateSuccess, setUpdateSuccess] = useState(false);
 
+  const [isOpen, setIsOpen] = useState(false);
 
-
+  
   const handleTogglePassword = () => {
     setIsShowPassword(!isShowPassword);
   };
@@ -120,6 +139,28 @@ const Profile = () => {
     }
 }
 
+//Modal 
+const handleOpen = () => setIsOpen(true);
+const handleClose = () => setIsOpen(false);
+
+const handleDeleteUser = async()=>{
+  try{
+    dispatch(deleteUserStart());
+    
+    const res = await fetch (`/api/user/delete/${currentUser._id}`,{
+      method:'DELETE',
+    })
+
+    const data = await res.json();
+    if(data.success===false){
+      dispatch(deleteUserFailure(data.message));
+    }
+    dispatch(deleteUserSuccess(data))
+  }catch(error){
+    dispatch(deleteUserFailure(error.message))
+  }
+}
+
   return (
     <div className='p-5 max-w-lg mx-auto'>
       <h1 className='text-3xl text-center font-semibold mb-7'>Hồ sơ người dùng</h1>
@@ -200,7 +241,9 @@ const Profile = () => {
         </button>
         
         <div className="flex justify-between">
-        <div className="text-red-600 hover:cursor-pointer font-semibold hover:text-red-800">Xóa tài khoản?</div>
+        <div className="text-red-600 hover:cursor-pointer font-semibold hover:text-red-800"
+          onClick={handleOpen}
+        >Xóa tài khoản?</div>
         <div className="text-red-600 hover:cursor-pointer font-semibold hover:text-red-800">Đăng xuất</div>
       </div>
 
@@ -208,7 +251,34 @@ const Profile = () => {
       <p className='text-green-700 mt-5 font-semibold mx-auto uppercase '>{updateSuccess ? 'Cập nhật thành công!' : ''}</p>
       </form>
 
-      
+      <Modal
+        open={isOpen}
+        onClose={handleClose}
+      >
+        <Box className="bg-slate-100 top-1/2 bottom-1/2 mx-auto mt-72 w-2/6 rounded-xl border-none">
+            <div className="flex flex-col gap-2">
+              <div className="flex justify-end px-2 py-1">
+                <IoIosClose className=" text-black font-bold cursor-pointer size-7" onClick={handleClose} />
+              </div>
+              
+              <div className="mb-3">
+                <h1 className="text-center font-bold my-4 uppercase text-red-800">Bạn có chắc chắn xóa tài khoản?</h1>
+              </div>
+              
+
+              <div className="flex justify-end gap-5 my-5 mx-5 px-2">
+                <button className="bg-slate-800 text-white rounded-md px-2 py-2 hover:bg-slate-600"
+                  onClick={handleDeleteUser}
+                >Đồng ý</button>
+                <button className="bg-gray-400 text-slate-900 rounded-md px-4 py-2 hover:bg-slate-500"
+                  onClick={handleClose}
+                >Hủy</button>
+              </div>
+            </div>
+
+        </Box>
+
+      </Modal>
     </div>
   )
 }
