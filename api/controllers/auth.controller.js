@@ -1,4 +1,3 @@
-
 import User from "../models/user.model.js";
 import bcryptjs from 'bcryptjs';
 import { errorHandler } from "../utils/error.js";
@@ -106,4 +105,13 @@ export const google = async (req,res,next) => {
         next(error)
     }
 }
+
+export const signOut = async (req, res, next) => {
+    try {
+      res.clearCookie('access_token');
+      res.status(200).json('Đăng xuất thành công');
+    } catch (error) {
+      next(error);
+    }
+  };
    

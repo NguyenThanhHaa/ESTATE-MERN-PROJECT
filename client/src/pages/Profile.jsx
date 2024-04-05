@@ -6,7 +6,7 @@ import { LuImagePlus } from "react-icons/lu";
 import Tooltip from '@mui/material/Tooltip';
 import {getStorage, uploadBytesResumable, ref, getDownloadURL} from 'https://www.gstatic.com/firebasejs/10.8.1/firebase-storage.js'
 import { app } from '../firebase';
-import {updateUserStart, updateUserFailure, updateUserSuccess, deleteUserFailure, deleteUserStart, deleteUserSuccess} from '../redux/user/userSlice'
+import {updateUserStart, updateUserFailure, updateUserSuccess, deleteUserFailure, deleteUserStart, deleteUserSuccess, signOutUserStart, signInFailure, signOutUserSuccess, signOutUserFailure} from '../redux/user/userSlice'
 import {useDispatch} from 'react-redux'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -161,6 +161,22 @@ const handleDeleteUser = async()=>{
   }
 }
 
+const handleSignOut = async () => {
+  try {
+    dispatch(signOutUserStart());
+    const res = await fetch ('/api/auth/sign-out',{
+      METHOD:'GET'
+    });
+    const data = await res.json();
+    if (data.success === false) {
+      dispatch(deleteUserFailure(data.message));
+      return;
+    }
+    dispatch(deleteUserSuccess(data));
+  } catch (error) {
+    dispatch(deleteUserFailure(error.message));
+  }
+};
   return (
     <div className='p-5 max-w-lg mx-auto'>
       <h1 className='text-3xl text-center font-semibold mb-7'>Hồ sơ người dùng</h1>
@@ -244,7 +260,9 @@ const handleDeleteUser = async()=>{
         <div className="text-red-600 hover:cursor-pointer font-semibold hover:text-red-800"
           onClick={handleOpen}
         >Xóa tài khoản?</div>
-        <div className="text-red-600 hover:cursor-pointer font-semibold hover:text-red-800">Đăng xuất</div>
+        <div className="text-red-600 hover:cursor-pointer font-semibold hover:text-red-800"
+          onClick={handleSignOut}
+        >Đăng xuất</div>
       </div>
 
       {error && <p className='text-red-500 mt-5 font-semibold mx-auto uppercase'>{error}</p>}

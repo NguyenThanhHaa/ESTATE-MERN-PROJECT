@@ -53,7 +53,6 @@ const Header = () => {
                     <Tooltip title={currentUser.username} placement="bottom">
                         <img src={currentUser.avatar} alt="user's avatar" className='rounded-full h-7 w-7 object-cover hover:border-2'/>
                     </Tooltip>
-                    
                 ) 
                 : 
                 <li className=" text-slate-700 hover:text-white">
