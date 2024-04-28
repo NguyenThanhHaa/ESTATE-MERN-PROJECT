@@ -13,6 +13,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { IoIosClose } from "react-icons/io";
+import {Link} from 'react-router-dom'
 
 const style = {
   position: 'absolute',
@@ -256,6 +257,13 @@ const handleSignOut = async () => {
         {loading ? 'Đang tải...' : 'Cập nhật'}
         </button>
         
+        <button className="bg-sky-900 p-4 text-white rounded-md uppercase hover:bg-sky-800 font-semibold">
+          <Link to={"/create-listing"}>
+            Tạo danh sách
+          </Link>
+        </button>
+        
+        
         <div className="flex justify-between">
         <div className="text-red-600 hover:cursor-pointer font-semibold hover:text-red-800"
           onClick={handleOpen}
@@ -266,7 +274,7 @@ const handleSignOut = async () => {
       </div>
 
       {error && <p className='text-red-500 mt-5 font-semibold mx-auto uppercase'>{error}</p>}
-      <p className='text-green-700 mt-5 font-semibold mx-auto uppercase '>{updateSuccess ? 'Cập nhật thành công!' : ''}</p>
+      <p className='text-green-700 mt-5 font-semibold uppercase w-full rounded-md py-2 text-center '>{updateSuccess ? 'Cập nhật thành công!' : ''}</p>
       </form>
 
       <Modal
@@ -283,8 +291,7 @@ const handleSignOut = async () => {
                 <h1 className="text-center font-bold my-4 uppercase text-red-800">Bạn có chắc chắn xóa tài khoản?</h1>
               </div>
               
-
-              <div className="flex justify-end gap-5 my-5 mx-5 px-2">
+              <div className="flex justify-center gap-5 my-5 mx-5 px-2">
                 <button className="bg-slate-800 text-white rounded-md px-2 py-2 hover:bg-slate-600"
                   onClick={handleDeleteUser}
                 >Đồng ý</button>
