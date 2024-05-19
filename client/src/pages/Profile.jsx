@@ -9,11 +9,10 @@ import { app } from '../firebase';
 import {updateUserStart, updateUserFailure, updateUserSuccess, deleteUserFailure, deleteUserStart, deleteUserSuccess, signOutUserStart, signInFailure, signOutUserSuccess, signOutUserFailure} from '../redux/user/userSlice'
 import {useDispatch} from 'react-redux'
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { IoIosClose } from "react-icons/io";
 import {Link} from 'react-router-dom'
+
 
 const style = {
   position: 'absolute',
@@ -272,10 +271,17 @@ const handleSignOut = async () => {
           onClick={handleSignOut}
         >Đăng xuất</div>
       </div>
-
-      {error && <p className='text-red-500 mt-5 font-semibold mx-auto uppercase'>{error}</p>}
-      <p className='text-green-700 mt-5 font-semibold uppercase w-full rounded-md py-2 text-center '>{updateSuccess ? 'Cập nhật thành công!' : ''}</p>
+      
+    
+      {error ?(
+        <div className='bg-red-200 p-3 rounded-md font-semibold text-center text-red-800 uppercase'>{error}</div>
+      ) : ''}
+      {updateSuccess ? (
+        <div className='bg-green-200 p-3 rounded-md font-semibold text-center text-green-800 uppercase'>Cập nhật thành công!</div>
+      ) : ''}
+   
       </form>
+      
 
       <Modal
         open={isOpen}
@@ -304,7 +310,11 @@ const handleSignOut = async () => {
         </Box>
 
       </Modal>
+
+
+      
     </div>
+    
   )
 }
 
