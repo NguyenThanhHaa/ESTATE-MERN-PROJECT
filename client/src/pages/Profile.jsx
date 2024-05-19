@@ -166,7 +166,7 @@ const handleSignOut = async () => {
   try {
     dispatch(signOutUserStart());
     const res = await fetch ('/api/auth/sign-out',{
-      METHOD:'GET'
+      METHOD:'POST'
     });
     const data = await res.json();
     if (data.success === false) {
