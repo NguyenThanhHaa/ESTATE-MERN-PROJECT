@@ -12,6 +12,8 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import { IoIosClose } from "react-icons/io";
 import {Link} from 'react-router-dom'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 const style = {
@@ -115,7 +117,7 @@ const Profile = () => {
     //preventDefault() được sử dụng để ngăn chặn các hành động mặc định đó.
     //Trong trường hợp này sử dụng preventDefault để ngăn việc trình duyệt sẽ reload page khi nhấn vào button submit 
     e.preventDefault();
-    
+
     try {
       // setLoading(true);
       dispatch(updateUserStart());
@@ -138,10 +140,12 @@ const Profile = () => {
       // setError(null);
       dispatch(updateUserSuccess(data));
       setUpdateSuccess(true);
+      showSuccessfulToastMessage('Cập nhật hồ sơ thành công!');
     } catch (error) {
       // setLoading(false);
       // setError(error.message);
       dispatch(updateUserFailure(error.message));
+      showErrorToastMessage(error.message);
     }
 }
 
@@ -179,8 +183,10 @@ const handleSignOut = async () => {
       return;
     }
     dispatch(deleteUserSuccess(data));
+    
   } catch (error) {
     dispatch(deleteUserFailure(error.message));
+    
   }
 };
 
@@ -214,11 +220,22 @@ const handleSignOut = async () => {
   };
   const handleIsCloseListings = () => setIsShowListings(false);
 
+  // Show Successful Toast Message
+  const showSuccessfulToastMessage = (text) => {
+    toast.success(text);
+  };
+
+  // Show Error Toast Message
+  const showErrorToastMessage = (text) =>{
+    toast.error(text);
+  }
+
+
   return (
     <div className='p-5 max-w-lg mx-auto'>
       <h1 className='text-3xl text-center font-semibold mb-7'>Hồ sơ người dùng</h1>
 
-      <form onSubmit={handleSubmit} className="mx-auto flex flex-col gap-6 ">
+      <form onSubmit={handleSubmit} className="mx-auto flex flex-col gap-4 ">
         {/* Sử dụng prop hidden để ẩn 
         Sử dụng prop accept để chỉ nhận kiểu file mong muốn */}
         {/* Manipulating a DOM with a ref  */}
@@ -290,7 +307,8 @@ const handleSignOut = async () => {
         </div>
 
         <button disabled={loading} className="bg-slate-700 p-4 text-white rounded-md uppercase hover:bg-slate-500 font-semibold">
-        {loading ? 'Đang tải...' : 'Cập nhật'}
+        {loading ? <p>Đang tải...</p> : <p>Cập nhật</p>}
+        
         </button>
         
         <button className="bg-sky-900 p-4 text-white rounded-md uppercase hover:bg-sky-800 font-semibold">
@@ -300,33 +318,31 @@ const handleSignOut = async () => {
         </button>
         
         <div className="flex justify-between">
-        <div className="text-red-600 hover:cursor-pointer font-semibold hover:text-red-800"
-          onClick={handleOpen}
-        >Xóa tài khoản?</div>
-        <div className="text-red-600 hover:cursor-pointer font-semibold hover:text-red-800"
-          onClick={handleSignOut}
-        >Đăng xuất</div>
-      </div>
+          <div className="text-red-600 hover:cursor-pointer font-semibold hover:text-red-800"
+            onClick={handleOpen}
+          >Xóa tài khoản?</div>
+          <div className="text-red-600 hover:cursor-pointer font-semibold hover:text-red-800"
+            onClick={handleSignOut}
+          >Đăng xuất</div>
+        </div>
       
-    
-      {error ?(
-        <div className='bg-red-200 p-3 rounded-md font-semibold text-center text-red-800 uppercase'>{error}</div>
-      ) : ''}
-      {updateSuccess ? (
-        <div className='bg-green-200 p-3 rounded-md font-semibold text-center text-green-800 uppercase'>Cập nhật thành công!</div>
-      ) : ''}
+        {error ?(
+        <ToastContainer/>
+        ) : ''}
+        {updateSuccess ? (
+          <ToastContainer/>
+        ) : ''}
 
-      <div className=" w-full text-center text-green-800 rounded-md uppercase hover:text-green-700 font-semibold "
-              >
-                {isShowListings ? 
-                  <p 
-                    onClick={handleIsCloseListings}
-                    className="cursor-pointer"
-                    >Đóng danh sách</p> 
-                  : <p 
-                      onClick={handleIsOpenListings}
-                      className="cursor-pointer"
-                      >Xem danh sách đã tạo</p>}
+      <div className=" text-center text-green-800 rounded-md uppercase hover:text-green-600 font-semibold ">
+        {isShowListings ? 
+          <p 
+            onClick={handleIsCloseListings}
+            className="cursor-pointer"
+            >Đóng danh sách</p> 
+          : <p 
+              onClick={handleIsOpenListings}
+              className="cursor-pointer"
+              >Xem danh sách đã tạo</p>}
         </div>
 
         <p>{showListingsError ? 'Có lỗi trong quá trình hiển thị. Vui lòng thử lại sau!' : ''}</p>
@@ -356,9 +372,6 @@ const handleSignOut = async () => {
       } 
    
       </form>
-
-      
-      
 
       <Modal
         className="modal-delete-user"
