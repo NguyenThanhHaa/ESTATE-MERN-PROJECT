@@ -57,10 +57,6 @@ const SignUp = () => {
     //Trong trường hợp này sử dụng preventDefault để ngăn việc trình duyệt sẽ reload page khi nhấn vào button submit 
     e.preventDefault();
 
-    if(formData.username==='' || formData.email ==='' ||  formData.password==='' || formData.confirmPassword===''){
-      setError('Vui lòng nhập đầy đủ các trường thông tin để đăng kí tài khoản!');
-    }
-
     if(formData.password === formData.confirmPassword){
       try {
         setLoading(true);

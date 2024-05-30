@@ -231,6 +231,27 @@ const handleSignOut = async () => {
     toast.error(text);
   }
 
+  const handleDeleteListing = async(listingId) =>{
+    try{
+      const res = await fetch(`api/listing/delete/${listingId}`,{
+        method:'DELETE'
+      })
+
+      const data = await res.json();
+
+      if(data.success === false){
+        return;
+      }
+
+      showSuccessfulToastMessage('Xóa thành công!');
+      setUserListings((prev)=> prev.filter((listing)=> listing._id !== listingId));
+      
+
+    }catch(error){
+      showErrorToastMessage('Có lỗi trong quá trình thực hiện. Vui lòng thử lại!');
+    }
+  }
+
 
   return (
     <div className='p-5 max-w-lg mx-auto'>
@@ -309,7 +330,6 @@ const handleSignOut = async () => {
 
         <button disabled={loading} className="bg-slate-700 p-4 text-white rounded-md uppercase hover:bg-slate-500 font-semibold">
         {loading ? <p>Đang tải...</p> : <p>Cập nhật</p>}
-        
         </button>
         
         <button className="bg-sky-900 p-4 text-white rounded-md uppercase hover:bg-sky-800 font-semibold">
@@ -329,10 +349,12 @@ const handleSignOut = async () => {
       
         {error ?(
         <ToastContainer/>
-        ) : ''}
+        ) : null}
         {updateSuccess ? (
           <ToastContainer/>
-        ) : ''}
+        ) : null}
+   
+      </form>
 
       <div className=" text-center text-green-800 rounded-md uppercase hover:text-green-600 font-semibold ">
         {isShowListings ? 
@@ -351,7 +373,7 @@ const handleSignOut = async () => {
       {
         isShowListings ? (
             userListings && userListings.length >0 && (
-              <div className='flex flex-col gap-4'>
+              <div className='flex flex-col gap-4 mt-4'>
               {userListings.map((listing) => (
                 <div
                   key={listing._id}
@@ -374,6 +396,7 @@ const handleSignOut = async () => {
                   <div className='flex item-center font-semibold gap-3 '>
                     <button
                       className='text-red-700'
+                      onClick={()=> handleDeleteListing(listing._id)}
                     >
                       Xóa
                     </button>
@@ -388,8 +411,6 @@ const handleSignOut = async () => {
             </div>
         )) : ''
       } 
-   
-      </form>
 
       <Modal
         className="modal-delete-user"
@@ -421,36 +442,7 @@ const handleSignOut = async () => {
       </Modal>
 
 
-      {/* <Modal
-        className="modal-show-listings"
-        open={isShowListings}
-        onClose={handleIsCloseListings}
-      >
-       <Box className="bg-slate-100 top-1/2 bottom-1/2 mx-auto mt-72 w-2/6 rounded-xl border-none">
-            <div className="flex flex-col gap-2">
-              <div className="flex justify-end px-2 py-1">
-                <IoIosClose className=" text-black font-bold cursor-pointer size-7" onClick={handleClose} />
-              </div>
-              
-              <div className="mb-3">
-                <h1 className="text-center font-bold my-4 uppercase text-red-800">Bạn có chắc chắn xóa tài khoản?</h1>
-              </div>
-              
-              <div className="flex justify-center gap-5 my-5 mx-5 px-2">
-                <button className="bg-slate-800 text-white rounded-md px-2 py-2 hover:bg-slate-600"
-                  onClick={handleDeleteUser}
-                >Đồng ý</button>
-                <button className="bg-gray-400 text-slate-900 rounded-md px-4 py-2 hover:bg-slate-500"
-                  onClick={handleIsCloseListings}
-                >Hủy</button>
-              </div>
-            </div>
-
-        </Box>
-        
-      </Modal>
-       */}
-
+      
       
     </div>
     
