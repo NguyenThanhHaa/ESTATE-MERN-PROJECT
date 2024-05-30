@@ -11,11 +11,11 @@ export const signup = async (req,res,next)=>{
     const validUserName = await User.findOne({username});
 
     if(validEmail){
-        return next(errorHandler(400,'Tài khoản đã tồn tại!!!!'));
-    }
+        return next(errorHandler(400,'Email Tài khoản đã tồn tại!!!!'));
+    } 
 
     if(validUserName){
-        return next(errorHandler(400,'Tài khoản đã tồn tại!!!!'));
+        return next(errorHandler(400,'Tên Tài khoản đã tồn tại!!!!'));
     }
 
     const validPassword = password.match(

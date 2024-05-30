@@ -4,6 +4,7 @@ import { IoEyeSharp } from "react-icons/io5";
 import { IoEyeOffSharp } from "react-icons/io5";
 import OAuth from '../components/OAuth';
 
+
 const SignUp = () => {
   const [password, setPassword] = useState('');
 
@@ -18,6 +19,10 @@ const SignUp = () => {
   const [loading, setLoading] = useState(false); 
 
   const navigate = useNavigate();
+
+  const showSuccessfulToastMessage = (text) => {
+    toast.success(text);
+  };
 
 
 
@@ -52,6 +57,10 @@ const SignUp = () => {
     //Trong trường hợp này sử dụng preventDefault để ngăn việc trình duyệt sẽ reload page khi nhấn vào button submit 
     e.preventDefault();
 
+    if(formData.username==='' || formData.email ==='' ||  formData.password==='' || formData.confirmPassword===''){
+      setError('Vui lòng nhập đầy đủ các trường thông tin để đăng kí tài khoản!');
+    }
+
     if(formData.password === formData.confirmPassword){
       try {
         setLoading(true);
@@ -73,7 +82,7 @@ const SignUp = () => {
         setLoading(false);
         setError(null);
         navigate('/sign-in');
-        
+
         
       } catch (error) {
         setLoading(false);
@@ -83,6 +92,7 @@ const SignUp = () => {
     else if(formData.password !== formData.confirmPassword){
       setError('Mật khẩu không khớp!');
     }
+   
 
 }
   
@@ -159,6 +169,8 @@ const SignUp = () => {
         </Link>
       </div>
     {error && <p className='text-red-500 mt-5'>{error}</p>}
+
+  
     </div>
   )
 }
