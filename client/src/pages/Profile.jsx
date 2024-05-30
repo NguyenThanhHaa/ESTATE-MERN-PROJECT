@@ -349,26 +349,43 @@ const handleSignOut = async () => {
       
       {
         isShowListings ? (
-            userListings && userListings.length >0 && (userListings.map((listing)=>(
-            <div key={listing._id} className="bg-white border rounded-lg p-3 flex justify-between items-center gap-5">
-              <Link to={`/listing/${listing._id}`}>
-                <img src={listing.imageUrls[0]} className="h-16 w-16 rounded-md"/>
-              
-              </Link>
+            userListings && userListings.length >0 && (
+              <div className='flex flex-col gap-4'>
+              {userListings.map((listing) => (
+                <div
+                  key={listing._id}
+                  className='bg-white border rounded-lg p-3 flex justify-between items-center gap-4'
+                >
+                  <Link to={`/listing/${listing._id}`}>
+                    <img
+                      src={listing.imageUrls[0]}
+                      alt='listing cover'
+                      className='h-16 w-16 rounded-md'
+                    />
+                  </Link>
+                  <Link
+                    className='text-slate-700 font-semibold  hover:underline truncate flex-1'
+                    to={`/listing/${listing._id}`}
+                  >
+                    <p>{listing.name}</p>
+                  </Link>
+    
+                  <div className='flex item-center font-semibold gap-3 '>
+                    <button
+                      className='text-red-700'
+                    >
+                      Xóa
+                    </button>
 
-              <Link to={`/listing/${listing._id}`}>
-                {/* truncate: when text is too long, it will show ... */}
-                <div className="font-semibold hover:underline truncate">{listing.name}</div>
-              </Link>
-
-              <div className="flex gap-5">
-                <div className="text-green-700 font-semibold cursor-pointer">Sửa</div>
-                <div className="text-gray-300">|</div>
-                <div className="text-red-700 font-semibold cursor-pointer">Xóa</div>
-              </div>
-              
+                    <p className="text-gray-300">|</p>
+                  
+                    <button className='text-green-700'>Sửa</button>
+                    
+                  </div>
+                </div>
+              ))}
             </div>
-        )))) : ''
+        )) : ''
       } 
    
       </form>
