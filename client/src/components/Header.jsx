@@ -44,13 +44,13 @@ const Header = () => {
             <FaSearch className='text-slate-500'/>
         </form>
 
-        <ul className='flex gap-8 font-semibold items-center'>
+        <ul className='flex gap-8 items-center'>
             {/* Sử dụng hidden sm:inline để khi thu nhỏ screen thì không xuất hiện */}
             <Link 
                 to="/"
                 duration={500}
                 className="group relative inline-block cursor-pointer hover:text-brightColor">
-                <li className="hidden sm:inline text-slate-700 hover:text-white">
+                <li className="hidden sm:inline text-slate-700 hover:text-white font-semibold">
                     Trang chủ
                     {/* Hiệu ứng trượt underline */}
                     <span className="absolute inset-x-0 bottom-0 h-0.5 bg-white transform scale-x-0 origin-left transition-transform group-hover:scale-x-100"></span>
@@ -61,19 +61,21 @@ const Header = () => {
                 to="/about"
                 duration={500}
                 className="group relative inline-block cursor-pointer hover:text-brightColor">
-                <li className="hidden sm:inline text-slate-700  hover:text-white">
+                <li className="hidden sm:inline text-slate-700  hover:text-white font-semibold">
                     Giới thiệu
                     <span className="absolute inset-x-0 bottom-0 h-0.5 bg-white transform scale-x-0 origin-left transition-transform group-hover:scale-x-100"></span>
                     </li>
             </Link>
-                {currentUser ? (
+
+            {currentUser ? (
                     <Dropdown
                         arrowIcon={false}
                         inline
                         label={
-                        <Avatar alt='user' img={currentUser.avatar} rounded className="w-8 h-8" />
+                        <Avatar alt='user' img={currentUser.avatar} rounded  className="w-8 h-8" />
                         }
                         className='z-20'
+
                     >
                         <Dropdown.Header>
                             <span className='block text-sm'>{currentUser.username}</span>
@@ -81,30 +83,28 @@ const Header = () => {
                                 {currentUser.email}
                             </span>
                         </Dropdown.Header>
-                        <Link to={'/profile'}>
-                            <Dropdown.Item>Hồ sơ</Dropdown.Item>
-                        </Link>
+                        <Dropdown.Item>
+                            <Link to={'/profile'}>
+                            Hồ sơ 
+                            </Link>
+                        </Dropdown.Item>
                         <Dropdown.Divider />
                         <Dropdown.Item onClick={handleSignOut}>Đăng xuất</Dropdown.Item>
                     </Dropdown>
-                ) 
-                : 
+                ) :
+
                 <Link 
-                to="/sign-in"
-                duration={500}
-                className="group relative inline-block cursor-pointer hover:text-brightColor">
-                <li className="hidden sm:inline text-slate-700  hover:text-white">
-                    Đăng nhập 
-                    <span className="absolute inset-x-0 bottom-0 h-0.5 bg-white transform scale-x-0 origin-left transition-transform group-hover:scale-x-100"></span>
-                    </li>
+                    to="/sign-in"
+                    duration={500}
+                    className="group relative inline-block cursor-pointer hover:text-brightColor">
+                    <li className="hidden sm:inline text-slate-700  hover:text-white font-semibold">
+                        Đăng nhập 
+                        <span className="absolute inset-x-0 bottom-0 h-0.5 bg-white transform scale-x-0 origin-left transition-transform group-hover:scale-x-100"></span>
+                        </li>
                 </Link>
-            
-        }
-        
-           
-                
-            
+            }
         </ul>
+        
         </div>
       
     </header>
