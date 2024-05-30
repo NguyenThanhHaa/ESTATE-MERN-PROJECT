@@ -6,6 +6,7 @@ import OAuth from '../components/OAuth';
 
 const SignUp = () => {
   const [password, setPassword] = useState('');
+
   const [formData,setFormData] = useState({});
 
   const [isShowPassword, setIsShowPassword] = useState(false);
@@ -50,30 +51,39 @@ const SignUp = () => {
     //preventDefault() được sử dụng để ngăn chặn các hành động mặc định đó.
     //Trong trường hợp này sử dụng preventDefault để ngăn việc trình duyệt sẽ reload page khi nhấn vào button submit 
     e.preventDefault();
-    
-    try {
-      setLoading(true);
-      const res = await fetch('/api/auth/sign-up', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-      const data = await res.json();
-      console.log(data);
-      if (data.success === false) {
+
+    if(formData.password === formData.confirmPassword){
+      try {
+        setLoading(true);
+       
+        const res = await fetch('/api/auth/sign-up', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+        const data = await res.json();
+        console.log(data);
+        if (data.success === false) {
+          setLoading(false);
+          setError(data.message);
+          return;
+        }
         setLoading(false);
-        setError(data.message);
-        return;
+        setError(null);
+        navigate('/sign-in');
+        
+        
+      } catch (error) {
+        setLoading(false);
+        setError(error.message);
       }
-      setLoading(false);
-      setError(null);
-      navigate('/sign-in');
-    } catch (error) {
-      setLoading(false);
-      setError(error.message);
     }
+    else if(formData.password !== formData.confirmPassword){
+      setError('Mật khẩu không khớp!');
+    }
+
 }
   
   return (
@@ -122,7 +132,7 @@ const SignUp = () => {
             onChange={handleOnChange}
             placeholder='Xác nhận mật khẩu' 
             className='border p-3 rounded-lg w-full' 
-            id='confirm-password'/>
+            id='confirmPassword'/>
 
           <button
             type="button"

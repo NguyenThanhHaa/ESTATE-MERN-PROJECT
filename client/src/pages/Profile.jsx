@@ -165,6 +165,7 @@ const handleDeleteUser = async()=>{
     if(data.success===false){
       dispatch(deleteUserFailure(data.message));
     }
+
     dispatch(deleteUserSuccess(data))
   }catch(error){
     dispatch(deleteUserFailure(error.message))
