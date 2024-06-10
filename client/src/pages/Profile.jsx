@@ -402,8 +402,15 @@ const handleSignOut = async () => {
                     </button>
 
                     <p className="text-gray-300">|</p>
-                  
-                    <button className='text-green-700'>Sửa</button>
+                  <Link
+                    to={`/update-listing/${listing._id}`}
+                  >
+                    <button 
+                        className='text-green-700'
+
+                      >Sửa</button>
+                  </Link>
+                    
                     
                   </div>
                 </div>
