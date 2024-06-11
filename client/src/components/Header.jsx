@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {FaSearch} from 'react-icons/fa'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {useSelector } from 'react-redux'
 import { Tooltip } from '@mui/material'
 import { Avatar, Dropdown } from 'flowbite-react';
@@ -11,6 +11,10 @@ import { HiLogout} from "react-icons/hi";
 const Header = () => {
     const {currentUser} = useSelector(state=>state.user);
     const dispatch = useDispatch();
+
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const navigate = useNavigate();
 
     const handleSignOut = async () => {
         try {
@@ -29,6 +33,22 @@ const Header = () => {
         }
       };
 
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        const urlParams = new URLSearchParams(window.location.search);
+        urlParams.set('searchTerm', searchTerm);
+        const searchQuery = urlParams.toString();
+        navigate(`/search?${searchQuery}`);
+      };
+
+    useEffect(() => {
+        const urlParams = new URLSearchParams(location.search);
+        const searchTermFromUrl = urlParams.get('searchTerm');
+        if (searchTermFromUrl) {
+          setSearchTerm(searchTermFromUrl);
+        }
+      }, [location.search]);
+
   return (
     <header className="bg-gradient-to-r from-slate-200 via-slate-300 to-slate-400 shadow-md">
         <div className='flex justify-around items-center max-w-6xl mx-auto py-3 px-10'>
@@ -39,9 +59,19 @@ const Header = () => {
                 </h1>
             </Link>
 
-        <form className="bg-slate-100 p-3 rounded-lg flex items-center">
-            <input type="text" placeholder='Tìm kiếm...' className="bg-transparent focus:outline-none w-24 sm:w-64"/>
-            <FaSearch className='text-slate-500'/>
+        <form 
+            className="bg-slate-100 p-3 rounded-lg flex items-center"
+            onSubmit={handleSubmit}>
+            <input 
+                type="text" 
+                placeholder='Tìm kiếm...' 
+                value={searchTerm}
+                onChange={(e)=>setSearchTerm(e.target.value)}
+                className="bg-transparent focus:outline-none w-24 sm:w-64"
+            />
+            <button>
+                <FaSearch className='text-slate-500'/>
+            </button>
         </form>
 
         <ul className='flex gap-8 items-center'>
