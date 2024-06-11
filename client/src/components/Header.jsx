@@ -97,9 +97,10 @@ const Header = () => {
                     to="/sign-in"
                     duration={500}
                     className="group relative inline-block cursor-pointer hover:text-brightColor">
-                    <li className="hidden sm:inline text-slate-700  hover:text-white font-semibold">
+                    <li className=" text-slate-700  hover:text-white font-semibold
+                    ">
                         Đăng nhập 
-                        <span className="absolute inset-x-0 bottom-0 h-0.5 bg-white transform scale-x-0 origin-left transition-transform group-hover:scale-x-100"></span>
+                        <span className=" hidden sm:inline absolute inset-x-0 bottom-0 h-0.5 bg-white transform scale-x-0 origin-left transition-transform group-hover:scale-x-100"></span>
                         </li>
                 </Link>
             }
