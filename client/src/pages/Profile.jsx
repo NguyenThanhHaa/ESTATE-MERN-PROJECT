@@ -267,7 +267,8 @@ const handleSignOut = async () => {
           <img 
             src={formData.avatar || currentUser.avatar}
             alt="user's avatar" 
-            className=" rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2"/>
+            className=" rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2"
+            onClick={()=>fileRef.current.click()} />
           <LuImagePlus
           // After React creates the DOM node and puts it on the screen, React will set the current property of your ref object to that DOM node. 
             onClick={()=>fileRef.current.click()} 
