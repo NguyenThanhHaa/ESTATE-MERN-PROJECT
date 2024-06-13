@@ -369,7 +369,7 @@ const handleSignOut = async () => {
               >Xem danh sách đã tạo</p>}
         </div>
 
-        <p>{showListingsError ? 'Có lỗi trong quá trình hiển thị. Vui lòng thử lại sau!' : ''}</p>
+        {showListingsError ? 'Có lỗi trong quá trình hiển thị. Vui lòng thử lại sau!' : ''}
       
       {
         isShowListings ? (
