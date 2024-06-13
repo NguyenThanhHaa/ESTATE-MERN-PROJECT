@@ -1,9 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import {useNavigate} from 'react-router-dom'
 import ListingItem from '../components/ListingItem';
+import ReactPaginate from 'react-paginate';
+
 
 export default function Search() {
     const navigate  = useNavigate();
+
+    const [showMore, setShowMore] = useState(false); 
+
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const [postPerPage, setPostPerPage] = useState(8);
+    
+    const lastPostIndex = postPerPage * currentPage;
+    const firstPostIndex = lastPostIndex - postPerPage;
+
+    
 
     const [sidebardata, setSideBarData] = useState({
         searchTerm:'',
@@ -18,6 +31,7 @@ export default function Search() {
     const [loading, setLoading] = useState(false);
     
     const [listing, setListing] = useState([]);
+
 
     // console.log(sidebardata);
 
@@ -60,6 +74,7 @@ export default function Search() {
         }
 
         console.log(listing);
+
         const fetchListing = async()=>{
             setLoading(true);
 
@@ -68,6 +83,11 @@ export default function Search() {
             const res = await fetch (`/api/listing/get?${searchQuery}`);
 
             const data = await res.json();
+
+            if(data.length > 8){
+                setShowMore(true);
+
+            }
 
             setListing(data);
             setLoading(false);
@@ -118,6 +138,25 @@ export default function Search() {
 
     }
 
+    const onShowMoreClick = async () => {
+        const numberOfListings = listing.length;
+        const startIndex = numberOfListings;
+        const urlParams = new URLSearchParams(location.search);
+        urlParams.set('startIndex', startIndex);
+        const searchQuery = urlParams.toString();
+        const res = await fetch(`/api/listing/get?${searchQuery}`);
+        const data = await res.json();
+        
+        if (data.length < 9) {
+          setShowMore(false);
+        }
+        setListing([...listing, ...data]);
+    
+      };
+
+      const handlePageChange = () => {
+
+      }
 
   return (
     <div className="flex flex-col md:flex-row">
@@ -238,10 +277,25 @@ export default function Search() {
             {!loading &&
             listing &&
             listing.map((listing) => (
-              <ListingItem key={listing._id} listing={listing} />
-            ))}
+                
+                <ListingItem key={listing._id} listing={listing} />
+               
+            )) 
+            }
+    
             </div>
+
+           {showMore && (
+             <button 
+             className="hover:underline mb-5 "
+             onClick={onShowMoreClick}>Xem thêm</button>
+            
+           )}
+
+   
       </div>
+
+      
     </div>
   )
 }
