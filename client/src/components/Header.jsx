@@ -51,7 +51,7 @@ const Header = () => {
 
   return (
     <header className="bg-gradient-to-r from-slate-200 via-slate-300 to-slate-400 shadow-md">
-        <div className='flex justify-around items-center  mx-auto py-3 '>
+        <div className='flex justify-around items-center mx-auto py-3 '>
             <Link to="/">
                 <h1 className="font-bold text-sm sm:text-xl flex flex-wrap">
                 <span className="text-slate-500">Hee</span>
@@ -67,7 +67,7 @@ const Header = () => {
                 placeholder='Tìm kiếm...' 
                 value={searchTerm}
                 onChange={(e)=>setSearchTerm(e.target.value)}
-                className="bg-transparent focus:outline-none w-24 sm:w-64"
+                className="bg-transparent focus:outline-none w-24 sm:w-96 pr-24"
             />
             <button>
                 <FaSearch className='text-slate-500'/>
