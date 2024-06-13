@@ -15,7 +15,6 @@ import {
 import { useSelector } from 'react-redux';
 import Contact from '../components/Contact';
 
-
 export default function Listing() {
     SwiperCore.use([Navigation, Pagination]);
     const params = useParams();

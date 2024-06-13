@@ -51,7 +51,7 @@ const Header = () => {
 
   return (
     <header className="bg-gradient-to-r from-slate-200 via-slate-300 to-slate-400 shadow-md">
-        <div className='flex justify-around items-center max-w-6xl mx-auto py-3 px-10'>
+        <div className='flex justify-around items-center  mx-auto py-3 '>
             <Link to="/">
                 <h1 className="font-bold text-sm sm:text-xl flex flex-wrap">
                 <span className="text-slate-500">Hee</span>

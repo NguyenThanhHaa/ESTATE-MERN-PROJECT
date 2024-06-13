@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import {useNavigate} from 'react-router-dom'
+import ListingItem from '../components/ListingItem';
 
 export default function Search() {
     const navigate  = useNavigate();
@@ -120,7 +121,7 @@ export default function Search() {
 
   return (
     <div className="flex flex-col md:flex-row">
-      <div className="p-7 border-b-2 md:border-r-2 md:min-h-screen">
+      <div className="p-7 border-b-2 md:border-r-2 md:min-h-screen md:min-w-96">
             <form 
                 className="flex flex-col gap-8"
                 onSubmit={handleSubmit}>
@@ -223,8 +224,23 @@ export default function Search() {
             </form>
       </div>
 
-      <div className="">
+      <div className="flex flex-col">
             <h1 className="font-semibold text-3xl border-b p-3 text-slate-700 m-5">Kết quả: </h1>
+            <div className="p-7 flex gap-8 flex-wrap">
+                {!loading && listing.length === 0 && (
+                    <p className="text-xl text-center text-slate-700">Không có kết quả cần tìm!</p>
+                )}
+
+                {loading &&(
+                    <p className="text-xl text-center text-slate-700 w-full">Đang tải...</p>
+                )}
+
+            {!loading &&
+            listing &&
+            listing.map((listing) => (
+              <ListingItem key={listing._id} listing={listing} />
+            ))}
+            </div>
       </div>
     </div>
   )
