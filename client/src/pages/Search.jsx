@@ -9,15 +9,6 @@ export default function Search() {
 
     const [showMore, setShowMore] = useState(false); 
 
-    const [currentPage, setCurrentPage] = useState(1);
-
-    const [postPerPage, setPostPerPage] = useState(8);
-    
-    const lastPostIndex = postPerPage * currentPage;
-    const firstPostIndex = lastPostIndex - postPerPage;
-
-    
-
     const [sidebardata, setSideBarData] = useState({
         searchTerm:'',
         type:'all',
@@ -154,9 +145,6 @@ export default function Search() {
     
       };
 
-      const handlePageChange = () => {
-
-      }
 
   return (
     <div className="flex flex-col md:flex-row">
@@ -277,9 +265,7 @@ export default function Search() {
             {!loading &&
             listing &&
             listing.map((listing) => (
-                
                 <ListingItem key={listing._id} listing={listing} />
-               
             )) 
             }
     

@@ -14,7 +14,7 @@ import { FaMoneyBill1Wave } from "react-icons/fa6";
 
 export default function ListingItem({listing}) {
   return (
-    <div className='group relative border shadow-md hover:border-2 h-[490px] overflow-hidden rounded-lg  bg-white sm:w-[300px] transition-all'>
+    <div className='group relative border shadow-md hover:border-2 h-[490px] overflow-hidden rounded-lg  bg-white w-[300px] transition-all'>
     <Link to={`/listing/${listing._id}`}>
       <img
         src={listing.imageUrls}
@@ -26,7 +26,7 @@ export default function ListingItem({listing}) {
       <p className='text-lg font-semibold uppercase truncate'>{listing.name}</p>
       <div className="flex gap-3 items-center">
         <FaMapMarkerAlt className="text-slate-500"/>
-        <span className='italic text-sm'>{listing.address}</span>
+        <span className='italic text-sm truncate'>{listing.address}</span>
       </div>
       
       <span className='italic text-sm line-clamp-2'>{listing.description}</span>
