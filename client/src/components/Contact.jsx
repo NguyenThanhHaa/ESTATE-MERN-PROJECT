@@ -31,9 +31,9 @@ export default function Contact({listing}) {
     <>
         {landlord && (
             <div className="flex flex-col gap-4">
-                <p>Liên hệ chủ nhà 
-                    <span className="font-bold"> {landlord.username} </span>
-                    <span> về</span> <span className="uppercase font-bold">{listing.name}</span>
+                <p>Liên hệ người đăng bài:  
+                    <span className="font-bold  text-lg opacity-60"> {landlord.username} </span>
+                    <span> về</span> <span className="uppercase font-bold text-lg opacity-60">{listing.name}</span>
                 </p>
 
                 <textarea 
@@ -51,7 +51,7 @@ export default function Contact({listing}) {
                     to={`mailto:${landlord.email}?subject=${(listing.name).toUpperCase()}&body=${message}`}
                     className="bg-slate-700 text-white text-center p-3 uppercase rounded-lg hover:opacity-90"
                 >
-                    Gửi tin nhắn 
+                    Gửi mail 
                 </Link>
             </div>
         )}
