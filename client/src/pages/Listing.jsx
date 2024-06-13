@@ -98,8 +98,10 @@ export default function Listing() {
           )}
           <div className='flex flex-col max-w-4xl mx-auto p-3 gap-8'>
             <p className='text-2xl mt-5 font-semibold uppercase'>
-              {listing.name} - {""}
-              {listing.offer
+              {listing.name} 
+            </p>
+            <p className='text-xl font-semibold uppercase'>
+            {listing.offer
                 ? listing.discountPrice.toLocaleString('vi-VN')
                 : listing.regularPrice.toLocaleString('vi-VN')}
               {listing.type === 'rent' && ' VND / tháng'}
@@ -110,11 +112,11 @@ export default function Listing() {
               {listing.address}
             </p>
             <div className='flex items-center gap-4'>
-              <p className='bg-red-900 cursor-pointer w-full max-w-[200px] text-white text-center p-1 rounded-md'>
+              <p className='bg-red-900 cursor-pointer max-w-[200px] text-white text-center p-2 rounded-md'>
                 {listing.type === 'rent' ? 'Cho thuê' : 'Bán'}
               </p>
               {listing.offer && (
-                <p className='bg-green-900 w-full max-w-[200px] text-white text-center p-1 rounded-md'>
+                <p className='bg-green-900  max-w-[200px] text-white text-center w-full p-2 rounded-md '>
                     ↓ 
                  {(+listing.regularPrice - +listing.discountPrice).toLocaleString('vi-VN')} VND trên giá gốc
                 </p>
