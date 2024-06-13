@@ -42,7 +42,7 @@ export default function Contact({listing}) {
                     rows="3" 
                     value={message} 
                     onChange={onChange}
-                    placeholder="Nhập tin nhắn tại đây..."
+                    placeholder="Nhập nội dung mail cần trao đổi tại đây..."
                     className="p-3 w-full border rounded-lg "
                     >
                 </textarea>

@@ -148,7 +148,7 @@ export default function Listing() {
             {currentUser && listing.userRef !== currentUser._id && !contact && (
               <button
               onClick={()=>{setContact(true)}}
-              className="bg-slate-700 text-white rounded-lg uppercase hover:opacity-90 p-3 font-semibold">Liên hệ Chủ nhà tại đây </button>
+              className="bg-slate-700 text-white rounded-lg uppercase hover:opacity-90 p-3 font-semibold">Liên hệ chi tiết tại đây </button>
             )}
             {contact && (
               <Contact listing={listing}/>
