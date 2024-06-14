@@ -149,7 +149,7 @@ export default function Search() {
 
   return (
     <div className="flex flex-col md:flex-row">
-      <div className="p-7 border-b-2 md:border-r-2 md:min-h-screen md:min-w-96">
+      <div className="p-7 border-b-2 md:border-r-2 max-h-screen lg:max-w-96 lg:min-w-96">
             <form 
                 className="flex flex-col gap-8"
                 onSubmit={handleSubmit}>
