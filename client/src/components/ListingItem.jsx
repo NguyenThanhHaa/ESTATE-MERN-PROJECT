@@ -12,9 +12,13 @@ import {
 import { FaMoneyBill1Wave } from "react-icons/fa6";
 
 
-export default function ListingItem({listing}) {
+export default function ListingItem({listing,size}) {
+  
   return (
-    <div className='group relative border shadow-md hover:border-2 h-[490px] overflow-hidden rounded-lg  bg-white w-[300px] transition-all'>
+    <div 
+      className='group relative border shadow-md hover:border-2 h-[490px] overflow-hidden rounded-lg  bg-white  transition-all'
+      style={{width:size}}
+     >
     <Link to={`/listing/${listing._id}`}>
       <img
         src={listing.imageUrls}
