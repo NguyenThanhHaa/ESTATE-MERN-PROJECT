@@ -122,7 +122,7 @@ console.log(offerListing);
           <div className=''>
             <div className='my-3'>
               <h2 className='text-2xl font-semibold text-slate-600'>Cho Thuê</h2>
-              <Link className='text-sm text-blue-800 hover:underline' to={'/search?type=rent'}>Xem thêm những căn nhà cho thuê khác</Link>
+              <Link className='text-sm text-blue-800 hover:underline' to={'/search?type=rent'}>Xem thêm danh mục cho thuê khác</Link>
             </div>
             <div className='flex flex-wrap gap-12'>
               {rentListing.map((listing) => (
@@ -135,7 +135,7 @@ console.log(offerListing);
           <div className=''>
             <div className='my-3'>
               <h2 className='text-2xl font-semibold text-slate-600'>Bán</h2>
-              <Link className='text-sm text-blue-800 hover:underline' to={'/search?type=sale'}>Xem thêm những căn nhà được bán khác</Link>
+              <Link className='text-sm text-blue-800 hover:underline' to={'/search?type=sale'}>Xem thêm danh mục bán khác</Link>
             </div>
             <div className='flex flex-wrap gap-12'>
               {saleListing.map((listing) => (
