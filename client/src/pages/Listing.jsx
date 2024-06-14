@@ -112,11 +112,15 @@ export default function Listing() {
               {listing.address}
             </p>
             <div className='flex items-center gap-4'>
-              <p className='bg-red-900 cursor-pointer max-w-[200px] text-white text-center p-2 rounded-md'>
-                {listing.type === 'rent' ? 'Cho thuê' : 'Bán'}
-              </p>
+              
+              {listing.type === 'rent' ? (
+                <p className='bg-red-900 cursor-pointer max-w-[200px] text-white text-center p-2 rounded-md'>Cho thuê</p>
+              ) : (
+                <p className='bg-red-900 cursor-pointer w-36 text-white text-center p-2 rounded-md'>Bán</p>
+              )}
+              
               {listing.offer && (
-                <p className='bg-green-900  max-w-[200px] text-white text-center w-full p-2 rounded-md '>
+                <p className='bg-green-900  max-w-[300px] text-white text-center w-full p-2 rounded-md '>
                     ↓ 
                  {(+listing.regularPrice - +listing.discountPrice).toLocaleString('vi-VN')} VND trên giá gốc
                 </p>

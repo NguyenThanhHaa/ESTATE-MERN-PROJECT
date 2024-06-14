@@ -272,7 +272,7 @@ const CreateListing = () => {
                 <div className="flex gap-2 items-center ">
                     <input type="number" id="regularPrice" 
                     min="50" 
-                    max="10000000" required
+                    max="100000000" required
                     className="border-gray-300 p-3 px-7 rounded-lg"
                     onChange={handleChange}
                     value={formData.regularPrice}/>

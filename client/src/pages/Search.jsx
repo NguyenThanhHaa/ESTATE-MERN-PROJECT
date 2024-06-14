@@ -68,7 +68,7 @@ export default function Search() {
 
         const fetchListing = async()=>{
             setLoading(true);
-
+            setShowMore(false);
             const searchQuery = urlParams.toString();
 
             const res = await fetch (`/api/listing/get?${searchQuery}`);
@@ -77,7 +77,8 @@ export default function Search() {
 
             if(data.length > 8){
                 setShowMore(true);
-
+            }else{
+                setShowMore(false);
             }
 
             setListing(data);

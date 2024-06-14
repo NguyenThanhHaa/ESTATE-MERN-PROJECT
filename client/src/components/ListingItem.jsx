@@ -29,7 +29,7 @@ export default function ListingItem({listing}) {
         <span className='italic text-sm truncate'>{listing.address}</span>
       </div>
       
-      <span className='italic text-sm line-clamp-2'>{listing.description}</span>
+      <span className='italic text-sm truncate'>{listing.description}</span>
       <div className="flex gap-3 items-center font-semibold text-lg">
         <FaMoneyBill1Wave className="text-slate-500"/>
             {listing.offer ? (listing.discountPrice).toLocaleString('vi-VN') : (listing.regularPrice.toLocaleString('vi-VN') )}
