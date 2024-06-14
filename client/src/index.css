@@ -6,3 +6,37 @@
 body{
     background-color: rgb(241 245 249);
 }
+
+
+/* styles.css hoặc trong style tag */
+.swiper-button-next, .swiper-button-prev {
+    color: #334155; /* Màu của nút */
+    background-color: #fff; /* Màu nền của nút */
+    border-radius: 50%; /* Bo góc tròn */
+    width: 40px; /* Độ rộng của nút */
+    height: 40px; /* Chiều cao của nút */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.swiper-button-next::after, .swiper-button-prev::after {
+    font-size: 20px; /* Kích thước của biểu tượng mũi tên */
+    font-weight: bold;
+}
+
+/* styles.css hoặc trong style tag */
+.swiper-pagination-bullet {
+    background: #94a3b8; /* Màu nền của bullet */
+    opacity: 1; /* Độ mờ của bullet */
+}
+
+.swiper-pagination-bullet-active {
+    background: #fff; /* Màu nền của bullet khi active */
+}
+
+.swiper-pagination {
+    bottom: 10px; /* Vị trí của pagination */
+    text-align: center; /* Canh giữa pagination */
+}
+
