@@ -357,7 +357,7 @@ const handleSignOut = async () => {
    
       </form>
 
-      <div className=" text-center text-green-800 rounded-md uppercase hover:text-green-600 font-semibold ">
+      <div className=" mt-5 text-center text-green-800 rounded-md uppercase hover:text-green-600 font-semibold ">
         {isShowListings ? 
           <p 
             onClick={handleIsCloseListings}
