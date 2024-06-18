@@ -14,19 +14,7 @@ import { IoIosClose } from "react-icons/io";
 import {Link} from 'react-router-dom'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
+import { Dropdown } from 'flowbite-react';
 
 const Profile = () => {
   
@@ -68,6 +56,7 @@ const Profile = () => {
       handleFileUpload(file);
     }
   },[file]);
+
 
   const handleFileUpload = (file) => {
     const storage = getStorage(app);
@@ -252,6 +241,32 @@ const handleSignOut = async () => {
     }
   }
 
+  const handleDeleteAvatar = async () =>{
+    try{
+      dispatch(updateUserStart());
+      const res = await fetch(`/api/user/delete-avatar/${currentUser._id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      console.log(data);
+      if (data.success === false) {
+        dispatch(updateUserFailure(data.message));
+        return;
+      }
+      dispatch(updateUserSuccess(data));
+      setUpdateSuccess(true);
+      showSuccessfulToastMessage('Xóa ảnh thành công!');
+    }catch(error){
+      dispatch(updateUserFailure(error.message));
+      showErrorToastMessage('Có lỗi trong quá trình thực hiện. Vui lòng thử lại!');
+    }
+
+  }
+
 
   return (
     <div className='p-5 max-w-lg mx-auto'>
@@ -262,20 +277,39 @@ const handleSignOut = async () => {
         Sử dụng prop accept để chỉ nhận kiểu file mong muốn */}
         {/* Manipulating a DOM with a ref  */}
         <input onChange={(e)=>setFile(e.target.files[0])} type='file' ref={fileRef} hidden accept="image/*"/>  
-        <Tooltip title="Tải ảnh mới" placement="right-end">
+        <Tooltip title="Thay đổi ảnh" placement="right-end">
         <div className="flex relative mx-auto ">
-          <img 
-            src={formData.avatar || currentUser.avatar}
-            alt="user's avatar" 
-            className=" rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2"
-            onClick={()=>fileRef.current.click()} />
-          <LuImagePlus
-          // After React creates the DOM node and puts it on the screen, React will set the current property of your ref object to that DOM node. 
-            onClick={()=>fileRef.current.click()} 
-            className="absolute bottom-0 right-0 h-6 w-6  rounded-md cursor-pointer tool" 
-            style={{
-            backgroundColor:'rgb(241 245 249)'
-            }} />
+         
+              <Dropdown
+              arrowIcon={false}
+              inline
+              className='z-20'
+              placement="right-start"
+              label={
+                <>
+                 <img 
+                  src={formData.avatar || currentUser.avatar ||"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"}
+                  alt="user's avatar" 
+                  className=" rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2"
+                />
+          
+                  <LuImagePlus
+                  className="absolute bottom-0 right-0 h-6 w-6  rounded-md cursor-pointer tool" 
+                  style={{
+                  backgroundColor:'rgb(241 245 249)'
+                  }} />
+                </>
+                }>
+                <Dropdown.Item
+                // After React creates the DOM node and puts it on the screen, React will set the current property of your ref object to that DOM node. 
+                  onClick={()=>fileRef.current.click()}
+                >
+                    Đổi ảnh 
+                </Dropdown.Item>
+                
+                <Dropdown.Item onClick={handleDeleteAvatar}>Xóa ảnh</Dropdown.Item>
+
+              </Dropdown>
         </div>
         </Tooltip>
         <p className='text-sm self-center'>
@@ -348,13 +382,7 @@ const handleSignOut = async () => {
           >Đăng xuất</div>
         </div>
       
-        {error ?(
-        <ToastContainer/>
-        ) : null}
-        {updateSuccess ? (
-          <ToastContainer/>
-        ) : null}
-   
+       
       </form>
 
       <div className=" mt-5 text-center text-green-800 rounded-md uppercase hover:text-green-600 font-semibold ">
@@ -450,7 +478,14 @@ const handleSignOut = async () => {
       </Modal>
 
 
-      
+      {error &&(
+        <ToastContainer/>
+        )}
+        
+        {updateSuccess && (
+          <ToastContainer/>
+        )}
+   
       
     </div>
     

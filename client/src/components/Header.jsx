@@ -102,7 +102,7 @@ const Header = () => {
                         arrowIcon={false}
                         inline
                         label={
-                        <Avatar alt='user' img={currentUser.avatar} rounded  className="w-8 h-8" />
+                        <img alt='user' src={currentUser.avatar } rounded  className="w-8 h-8 rounded-full" />
                         }
                         className='z-20'
 
