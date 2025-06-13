@@ -5,6 +5,7 @@ import SwiperCore from "swiper"
 import {Navigation, Pagination} from "swiper/modules"
 import "swiper/css/bundle"
 import ListingItem from '../components/ListingItem';
+import { API_URL, API_CONFIG } from '../config';
 
 const Home = () => {
   
@@ -19,12 +20,9 @@ const Home = () => {
   useEffect(()=>{
     const fetchOfferListing = async () =>{
       try{
-        const res = await fetch(`/api/listing/get?offer=true&limit=4`);
-
+        const res = await fetch(`${API_URL}/api/listing/get?offer=true&limit=4`, API_CONFIG);
         const data = await res.json();
-
         setOfferListing(data);
-
         fetchRentListing();
       }catch(err){
         console.log(err);
@@ -35,10 +33,8 @@ const Home = () => {
 
     const fetchSaleListing = async () =>{
       try{
-        const res = await fetch(`/api/listing/get?type=sale&limit=4`);
-
+        const res = await fetch(`${API_URL}/api/listing/get?type=sale&limit=4`, API_CONFIG);
         const data = await res.json();
-
         setSaleListing(data);
       }catch(err){
         console.log(err);
@@ -47,10 +43,8 @@ const Home = () => {
 
     const fetchRentListing = async() =>{
       try{
-        const res = await fetch(`/api/listing/get?type=rent&limit=4`);
-
+        const res = await fetch(`${API_URL}/api/listing/get?type=rent&limit=4`, API_CONFIG);
         const data = await res.json();
-
         setRentListing(data);
         fetchSaleListing();
       }catch(err){
@@ -70,18 +64,18 @@ console.log(offerListing);
       {/* Top */}
       <div className="flex flex-col gap-8 p-28 px-3 max-w-6xl mx-auto">
         <h1 className="text-slate-500 font-bold text-3xl lg:text-6xl flex flex-col gap-5  ">
-          <span className="text-slate-700 ">Ngôi nhà mơ ước,</span>  
-          <span>hiện thực trong tầm tay</span>
+          <span className="text-slate-700 ">Your Dream Home,</span>  
+          <span>Closer Than Ever!</span>
           
         </h1>
         <div className="text-gray-400 text-xs sm:text-sm ">
-        Với Hee Estate, bạn dễ dàng tìm được ngôi nhà mơ ước, phù hợp với nhu cầu và ngân sách của mình.
+        With Hee Estate, finding the perfect home that suits your needs and budget is easier than ever.
         </div>
 
         <Link
           to={'/search'}
           className="text-xs sm:text-sm text-blue-800 font-bold hover:underline "
-        >Sở hữu ngay bây giờ →  </Link>
+        >Make it yours today →  </Link>
       </div>
 
       {/* Swiper */}

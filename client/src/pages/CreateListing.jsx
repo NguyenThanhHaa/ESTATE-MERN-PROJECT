@@ -3,6 +3,7 @@ import {getStorage, uploadBytesResumable, ref, getDownloadURL} from 'https://www
 import { app } from '../firebase';
 import {useSelector} from 'react-redux';
 import {useNavigate} from 'react-router-dom'
+import { API_URL } from '../config';
 
 
 const CreateListing = () => {
@@ -136,7 +137,7 @@ const CreateListing = () => {
             setLoading(true);
             setError(false);
 
-            const res = await fetch('/api/listing/create',{
+            const res = await fetch(`${API_URL}/api/listing/create`,{
                 method:'POST',
                 headers:{
                     'Content-Type':'application/json',

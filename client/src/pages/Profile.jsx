@@ -15,6 +15,7 @@ import {Link} from 'react-router-dom'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Dropdown } from 'flowbite-react';
+import { API_URL } from '../config';
 
 const Profile = () => {
   
@@ -22,7 +23,7 @@ const Profile = () => {
 
   const dispatch = useDispatch()
 
-  // useRef: reference a value that’s not needed for rendering.
+  // useRef: reference a value that's not needed for rendering.
   const fileRef = useRef(null)
 
   const [file,setFile] = useState(undefined);
@@ -110,7 +111,7 @@ const Profile = () => {
     try {
       // setLoading(true);
       dispatch(updateUserStart());
-      const res = await fetch(`/api/user/update/${currentUser._id}`, {
+      const res = await fetch(`${API_URL}/api/user/update/${currentUser._id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -146,7 +147,7 @@ const handleDeleteUser = async()=>{
   try{
     dispatch(deleteUserStart());
     
-    const res = await fetch (`/api/user/delete/${currentUser._id}`,{
+    const res = await fetch (`${API_URL}/api/user/delete/${currentUser._id}`,{
       method:'DELETE',
     })
 
@@ -164,7 +165,7 @@ const handleDeleteUser = async()=>{
 const handleSignOut = async () => {
   try {
     dispatch(signOutUserStart());
-    const res = await fetch ('/api/auth/sign-out',{
+    const res = await fetch (`${API_URL}/api/auth/sign-out`,{
       METHOD:'POST'
     });
     const data = await res.json();
@@ -184,7 +185,7 @@ const handleSignOut = async () => {
     try{
 
       setShowListingsError(false);
-      const res = await fetch(`/api/user/listings/${currentUser._id}`,{
+      const res = await fetch(`${API_URL}/api/user/listings/${currentUser._id}`,{
         method:'GET'
       });
 
@@ -222,7 +223,7 @@ const handleSignOut = async () => {
 
   const handleDeleteListing = async(listingId) =>{
     try{
-      const res = await fetch(`api/listing/delete/${listingId}`,{
+      const res = await fetch(`${API_URL}/api/listing/delete/${listingId}`,{
         method:'DELETE'
       })
 
@@ -244,7 +245,7 @@ const handleSignOut = async () => {
   const handleDeleteAvatar = async () =>{
     try{
       dispatch(updateUserStart());
-      const res = await fetch(`/api/user/delete-avatar/${currentUser._id}`, {
+      const res = await fetch(`${API_URL}/api/user/delete-avatar/${currentUser._id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

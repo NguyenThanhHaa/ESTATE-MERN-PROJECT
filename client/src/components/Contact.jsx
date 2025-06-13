@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
+import { API_URL } from '../config';
 
 export default function Contact({listing}) {
 
@@ -10,7 +11,7 @@ export default function Contact({listing}) {
     useEffect(()=>{
         const fetchLandlord = async()=>{
             try{
-                const res = await fetch (`/api/user/${listing.userRef}`)
+                const res = await fetch(`${API_URL}/api/user/${listing.userRef}`)
 
                 const data = await res.json();
 

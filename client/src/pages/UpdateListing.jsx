@@ -3,6 +3,7 @@ import {getStorage, uploadBytesResumable, ref, getDownloadURL} from 'https://www
 import { app } from '../firebase';
 import {useSelector} from 'react-redux';
 import {useNavigate, useParams} from 'react-router-dom'
+import { API_URL } from '../config';
 
 
 const UpdateListing = () => {
@@ -34,7 +35,7 @@ const UpdateListing = () => {
     useEffect(()=>{
         const fetchListing = async()=>{
             const listingId = params.listingId;
-            const res = await fetch (`/api/listing/get/${listingId}`);
+            const res = await fetch(`${API_URL}/api/listing/get/${listingId}`);
 
             const data = await res.json();
 
@@ -153,7 +154,7 @@ const UpdateListing = () => {
             setLoading(true);
             setError(false);
 
-            const res = await fetch(`/api/listing/update/${params.listingId}`,{
+            const res = await fetch(`${API_URL}/api/listing/update/${params.listingId}`,{
                 method:'POST',
                 headers:{
                     'Content-Type':'application/json',

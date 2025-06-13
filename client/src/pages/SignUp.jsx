@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { IoEyeSharp } from "react-icons/io5";
 import { IoEyeOffSharp } from "react-icons/io5";
 import OAuth from '../components/OAuth';
+import { API_URL } from '../config';
 
 
 const SignUp = () => {
@@ -61,7 +62,7 @@ const SignUp = () => {
       try {
         setLoading(true);
        
-        const res = await fetch('/api/auth/sign-up', {
+        const res = await fetch(`${API_URL}/api/auth/sign-up`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

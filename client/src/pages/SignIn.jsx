@@ -5,6 +5,7 @@ import { IoEyeOffSharp } from "react-icons/io5";
 import { useDispatch, useSelector } from 'react-redux';
 import {signInStart,signInFailure,signInSuccess} from '../redux/user/userSlice'
 import OAuth from '../components/OAuth';
+import { API_URL, API_CONFIG } from '../config';
 
 const SignIn = () => {
   const [password, setPassword] = useState('');
@@ -60,11 +61,9 @@ const SignIn = () => {
     try {
       // setLoading(true);
       dispatch(signInStart());
-      const res = await fetch('/api/auth/sign-in', {
+      const res = await fetch(`${API_URL}/api/auth/sign-in`, {
+        ...API_CONFIG,
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
         body: JSON.stringify(formData),
       });
       const data = await res.json();

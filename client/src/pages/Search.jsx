@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react'
 import {useNavigate} from 'react-router-dom'
 import ListingItem from '../components/ListingItem';
 import ReactPaginate from 'react-paginate';
+import { API_URL } from '../config';
 
 
 export default function Search() {
     const navigate  = useNavigate();
 
     const [showMore, setShowMore] = useState(false); 
+
+    const [page, setPage] = useState(1);
 
     const [sidebardata, setSideBarData] = useState({
         searchTerm:'',
@@ -71,7 +74,7 @@ export default function Search() {
             setShowMore(false);
             const searchQuery = urlParams.toString();
 
-            const res = await fetch (`/api/listing/get?${searchQuery}`);
+            const res = await fetch(`${API_URL}/api/listing/get?${searchQuery}`);
 
             const data = await res.json();
 
@@ -130,21 +133,21 @@ export default function Search() {
 
     }
 
-    const onShowMoreClick = async () => {
-        const numberOfListings = listing.length;
-        const startIndex = numberOfListings;
-        const urlParams = new URLSearchParams(location.search);
-        urlParams.set('startIndex', startIndex);
-        const searchQuery = urlParams.toString();
-        const res = await fetch(`/api/listing/get?${searchQuery}`);
-        const data = await res.json();
+    // const onShowMoreClick = async () => {
+    //     const numberOfListings = listing.length;
+    //     const startIndex = numberOfListings;
+    //     const urlParams = new URLSearchParams(location.search);
+    //     urlParams.set('startIndex', startIndex);
+    //     const searchQuery = urlParams.toString();
+    //     const res = await fetch(`/api/listing/get?${searchQuery}`);
+    //     const data = await res.json();
         
-        if (data.length < 9) {
-          setShowMore(false);
-        }
-        setListing([...listing, ...data]);
+    //     if (data.length < 9) {
+    //       setShowMore(false);
+    //     }
+    //     setListing([...listing, ...data]);
     
-      };
+    //   };
 
 
   return (
@@ -265,18 +268,24 @@ export default function Search() {
 
             {!loading &&
             listing &&
-            listing.map((listing) => (
-                <ListingItem key={listing._id} size={300} listing={listing} />
+            listing.slice(page*10-10,page*10).map((listing) => (
+                <ListingItem 
+                    key={listing._id} 
+                    size={300} 
+                    listing={listing} />
             )) 
             }
     
             </div>
 
-           {showMore && (
+           {/* {showMore && (
              <button 
              className="hover:underline mb-5 "
              onClick={onShowMoreClick}>Xem thêm</button>
             
+           )} */}
+           {listing.length > 0 && (
+            <div className='pagination'>Pagination</div>
            )}
 
    

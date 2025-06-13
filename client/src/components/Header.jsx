@@ -7,6 +7,7 @@ import { Avatar, Dropdown } from 'flowbite-react';
 import {useDispatch} from 'react-redux'
 import { deleteUserFailure, deleteUserSuccess, signOutUserStart } from '../redux/user/userSlice'
 import { HiLogout} from "react-icons/hi";
+import { API_URL } from '../config';
 
 const Header = () => {
     const {currentUser} = useSelector(state=>state.user);
@@ -19,7 +20,7 @@ const Header = () => {
     const handleSignOut = async () => {
         try {
           dispatch(signOutUserStart());
-          const res = await fetch ('/api/auth/sign-out',{
+          const res = await fetch(`${API_URL}/api/auth/sign-out`,{
             METHOD:'POST'
           });
           const data = await res.json();
@@ -81,7 +82,7 @@ const Header = () => {
                 duration={500}
                 className="group relative inline-block cursor-pointer hover:text-brightColor">
                 <li className="hidden sm:inline text-slate-700 hover:text-white font-semibold">
-                    Trang chủ
+                    Home
                     {/* Hiệu ứng trượt underline */}
                     <span className="absolute inset-x-0 bottom-0 h-0.5 bg-white transform scale-x-0 origin-left transition-transform group-hover:scale-x-100"></span>
                     </li>
@@ -92,7 +93,7 @@ const Header = () => {
                 duration={500}
                 className="group relative inline-block cursor-pointer hover:text-brightColor">
                 <li className="hidden sm:inline text-slate-700  hover:text-white font-semibold">
-                    Giới thiệu
+                    About
                     <span className="absolute inset-x-0 bottom-0 h-0.5 bg-white transform scale-x-0 origin-left transition-transform group-hover:scale-x-100"></span>
                     </li>
             </Link>
@@ -115,7 +116,7 @@ const Header = () => {
                         </Dropdown.Header>
                         <Dropdown.Item>
                             <Link to={'/profile'}>
-                            Hồ sơ 
+                            Profile 
                             </Link>
                         </Dropdown.Item>
                         <Dropdown.Divider />
@@ -129,7 +130,7 @@ const Header = () => {
                     className="group relative inline-block cursor-pointer hover:text-brightColor">
                     <li className=" text-slate-700  hover:text-white font-semibold
                     ">
-                        Đăng nhập 
+                        Login
                         <span className=" hidden sm:inline absolute inset-x-0 bottom-0 h-0.5 bg-white transform scale-x-0 origin-left transition-transform group-hover:scale-x-100"></span>
                         </li>
                 </Link>
