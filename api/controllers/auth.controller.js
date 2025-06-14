@@ -66,7 +66,11 @@ export const signin = async(req,res,next) =>{
 
         //Save the token as the cookie
         //httpOnly:true có nghĩa là other third party applications can't have access to our cookie
-        res.cookie('access_token',token,{httpOnly:true}).status(200).json(rest); // chỉ trả về rest - các thuộc tính còn lại, mà không trả password của user về => bảo mật tốt hơn. 
+        res.cookie('access_token',token,{
+          httpOnly:true,
+          secure: true,
+          sameSite: 'None'
+        }).status(200).json(rest); // chỉ trả về rest - các thuộc tính còn lại, mà không trả password của user về => bảo mật tốt hơn. 
     }catch(error){
         next(error);
     }
@@ -81,7 +85,11 @@ export const google = async (req,res,next) => {
             const {password: pass,...rest} = user._doc;
 
             res 
-                .cookie('access_token',token,{httpOnly:true})
+                .cookie('access_token',token,{
+                  httpOnly:true,
+                  secure: true,
+                  sameSite: 'None'
+                })
                 .status(200)
                 .json(rest);
         }else{
@@ -97,7 +105,11 @@ export const google = async (req,res,next) => {
             const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
             const { password: pass, ...rest } = newUser._doc;
             res
-              .cookie('access_token', token, { httpOnly: true })
+              .cookie('access_token', token, {
+                httpOnly: true,
+                secure: true,
+                sameSite: 'None'
+              })
               .status(200)
               .json(rest);
         }

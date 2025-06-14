@@ -186,7 +186,11 @@ const handleSignOut = async () => {
 
       setShowListingsError(false);
       const res = await fetch(`${API_URL}/api/user/listings/${currentUser._id}`,{
-        method:'GET'
+        method:'GET',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        }
       });
 
       const data = await res.json();

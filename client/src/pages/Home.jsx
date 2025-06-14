@@ -64,18 +64,18 @@ console.log(offerListing);
       {/* Top */}
       <div className="flex flex-col gap-8 p-28 px-3 max-w-6xl mx-auto">
         <h1 className="text-slate-500 font-bold text-3xl lg:text-6xl flex flex-col gap-5  ">
-          <span className="text-slate-700 ">Your Dream Home,</span>  
-          <span>Closer Than Ever!</span>
+          <span className="text-slate-700 ">Ngôi nhà mơ ước,</span>  
+          <span>hiện thực trong tầm tay,</span>
           
         </h1>
         <div className="text-gray-400 text-xs sm:text-sm ">
-        With Hee Estate, finding the perfect home that suits your needs and budget is easier than ever.
+        Với Hee Estate, bạn dễ dàng tìm được ngôi nhà mơ ước, phù hợp với nhu cầu và ngân sách của mình.
         </div>
 
         <Link
           to={'/search'}
           className="text-xs sm:text-sm text-blue-800 font-bold hover:underline "
-        >Make it yours today →  </Link>
+        >Sở hữu ngay bây giờ →  </Link>
       </div>
 
       {/* Swiper */}
